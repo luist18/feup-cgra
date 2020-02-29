@@ -21,27 +21,22 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.diamond = new MyDiamond(this);
-        this.triangle = new MyTriangle(this);
-        this.parallelogram = new MyParallelogram(this);
-        this.triangleSmall = new MyTriangleSmall(this);
-        this.triangleBig = new MyTriangleBig(this);
+        this.tangram = new MyTangram(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.scaleFactor = 1;
-
-        this.displayDiamond = true;
-        this.displayTriangle = false;
-        this.displayParallelogram = false;
-        this.displayTriangleSmall = false;
-        this.displayTriangleBig = false;
     }
     initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
+        this.lights[0].setPosition(-5, 2, 10, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
+
+        this.lights[1].setPosition(5, 2, 10, 1);
+        this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[1].enable();
+        this.lights[1].update();
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
@@ -62,33 +57,15 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-        
+
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
 
         this.setDefaultAppearance();
 
-        var sca = [this.scaleFactor, 0.0, 0.0, 0.0,
-                    0.0, this.scaleFactor, 0.0, 0.0,
-                    0.0, 0.0, this.scaleFactor, 0.0,
-                    0.0, 0.0, 0.0, 1.0];
+        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
-        this.multMatrix(sca);
-
-        // ---- BEGIN Primitive drawing section
-
-        if (this.displayDiamond)
-            this.diamond.display();
-        if (this.displayTriangle)
-            this.triangle.display();
-        if (this.displayParallelogram)
-            this.parallelogram.display();
-        if (this.displayTriangleSmall)
-            this.triangleSmall.display();
-        if (this.displayTriangleBig)
-            this.triangleBig.display();
-
-        // ---- END Primitive drawing section
+        this.tangram.display();
     }
 }
