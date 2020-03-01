@@ -33,9 +33,9 @@ class MyTangram extends CGFobject {
 
         this.diamond.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 2. Parallelogram Transformation
+        this.scene.pushMatrix();
         this.scene.translate(-2, 0, 0);
         this.scene.rotate(-Math.PI / 2, 0, 0, 1);
         this.scene.scale(-1, 1, 1);
@@ -43,27 +43,27 @@ class MyTangram extends CGFobject {
 
         this.parallelogram.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 3. Small Triangle (1) Transformation
+        this.scene.pushMatrix();
         this.scene.translate(-2, 3, 0);
         this.scene.scale(1, -1, 1);
         this.scene.setDiffuse(150/255, 80/255, 190/255, 1);
 
         this.triangleSmallPurple.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 4. Big Triangle (1) Transformation
+        this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
         this.scene.setDiffuse(255/255, 155/255, 0, 1);
 
         this.triangleBigOrange.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 4. Big Triangle (2) Transformation
+        this.scene.pushMatrix();
         this.scene.translate(-Math.sqrt(8) - 1, -Math.sqrt(8) - 1, 0);
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
@@ -71,9 +71,9 @@ class MyTangram extends CGFobject {
 
         this.triangleBigBlue.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 5. Triangle Transformation
+        this.scene.pushMatrix();
         var diff1 = Math.sqrt((3 - 2 * Math.sqrt(2)) / 4);
         this.scene.translate(diff1, -Math.sqrt(2) + diff1, 0);
         this.scene.rotate(-Math.PI / 4, 0, 0, 1);
@@ -81,9 +81,9 @@ class MyTangram extends CGFobject {
 
         this.triangle.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
 
         // 6. Small Triangle (2) Transformation
+        this.scene.pushMatrix();
         var diff2 = Math.sqrt(2);
         this.scene.translate(diff1, -diff2 + diff1, 0)
         this.scene.rotate(Math.PI * 3 /4, 0, 0, 1);
@@ -92,7 +92,6 @@ class MyTangram extends CGFobject {
 
         this.triangleSmallRed.display();
         this.scene.popMatrix();
-        this.scene.pushMatrix();
     }
 }
 

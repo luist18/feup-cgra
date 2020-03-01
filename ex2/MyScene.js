@@ -22,10 +22,16 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.tangram = new MyTangram(this);
+        this.unitCube = new MyUnitCube(this);
+        this.unitCubeQuad = new MyUnitCubeQuad(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.scaleFactor = 1;
+
+        this.displayTangram = true;
+        this.displayUnitCube = false;
+        this.displayUnitCubeQuad = false;
     }
     initLights() {
         this.lights[0].setPosition(-5, 2, 10, 1);
@@ -66,6 +72,27 @@ class MyScene extends CGFscene {
 
         this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
-        this.tangram.display();
+        this.rotate(-Math.PI / 2, 1, 0, 0);
+        this.translate(4, -4, 0);
+
+        if (this.displayUnitCube) {
+            this.pushMatrix();
+            this.translate(0, 0, -0.505);
+            this.setDiffuse(1, 1, 1, 1);
+            this.scale(8, 8, 1);
+            this.unitCube.display();
+            this.popMatrix();
+        }
+
+        if (this.displayUnitCubeQuad) {
+            this.pushMatrix();
+            this.translate(0, 0, -0.505);
+            this.scale(8, 8, 1);
+            this.unitCubeQuad.display();
+            this.popMatrix();
+        }
+
+        if (this.displayTangram)
+            this.tangram.display();
     }
 }
