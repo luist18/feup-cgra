@@ -4,24 +4,46 @@
  * @param scene - Reference to MyScene object
  */
 class MyTangram extends CGFobject {
-	constructor(scene, material) {
-		super(scene);
+    constructor(scene) {
+        super(scene);
         this.initBuffers();
+    }
+    initBuffers() {
+        this.triangleSmallPurpleTexCoords = [
+            0, 0,
+            0, 0.5,
+            0.25, 0.25,
+            0, 0,
+            0, 0.5,
+            0.25, 0.25
+        ];
 
-        this.diamondMaterial = material;
-	}
-	initBuffers() {
+        this.triangleBigOrangeTexCoords = [
+            1, 1,
+            1, 0,
+            0.5, 0.5,
+            1, 1,
+            1, 0,
+            0.5, 0.5
+        ];
+        
         this.diamond = new MyDiamond(this.scene);
         this.triangle = new MyTriangle(this.scene);
         this.parallelogram = new MyParallelogram(this.scene);
-        this.triangleSmallPurple = new MyTriangleSmall(this.scene);
-        this.triangleBigOrange = new MyTriangleBig(this.scene);
+        this.triangleSmallPurple = new MyTriangleSmall(this.scene, this.triangleSmallPurpleTexCoords);
+        this.triangleBigOrange = new MyTriangleBig(this.scene, this.triangleBigOrangeTexCoords);
         this.triangleBigBlue = new MyTriangleBig(this.scene);
         this.triangleSmallRed = new MyTriangleSmall(this.scene);
 
+        this.texture = new CGFtexture(this.scene, 'images/tangram.png');
+
         this.material = new CGFappearance(this.scene);
-        this.material.setSpecular(1, 1, 1, 1.0);
+
+        this.material.setAmbient(0.1, 0.1, 0.1, 1);
+        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
         this.material.setShininess(10.0);
+        this.material.setTextureWrap('REPEAT', 'REPEAT');
     }
     display() {
         this.scene.pushMatrix();
@@ -36,7 +58,8 @@ class MyTangram extends CGFobject {
 
         this.scene.multMatrix(diamondTranslation);
 
-        this.diamondMaterial.apply();
+        this.material.setTexture(this.texture);
+        this.material.apply();
 
         this.diamond.display();
         this.scene.popMatrix();
@@ -47,8 +70,6 @@ class MyTangram extends CGFobject {
         this.scene.rotate(-Math.PI / 2, 0, 0, 1);
         this.scene.scale(-1, 1, 1);
 
-        this.material.setAmbient(0.5, 0.5, 0, 1.0);
-        this.material.setDiffuse(255/255, 255/255, 0, 1);
         this.material.apply();
 
         this.parallelogram.display();
@@ -59,12 +80,9 @@ class MyTangram extends CGFobject {
         this.scene.translate(-2, 3, 0);
         this.scene.rotate(Math.PI, 0, 0, 1);
 
-        this.material.setAmbient(75/255, 40/255, 95/255, 1.0);
-        this.material.setDiffuse(150/255, 80/255, 190/255, 1.0);
         this.material.apply();
 
         this.triangleSmallPurple.display();
-        this.scene.translate(100, 100, 100);
         this.scene.popMatrix();
 
         // 4. Big Triangle (1) Transformation
@@ -72,8 +90,6 @@ class MyTangram extends CGFobject {
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
 
-        this.material.setAmbient(0.5, 72/255, 0, 1.0);
-        this.material.setDiffuse(1, 155/255, 0, 1.0);
         this.material.apply();
 
         this.triangleBigOrange.display();
@@ -85,8 +101,6 @@ class MyTangram extends CGFobject {
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
 
-        this.material.setAmbient(0.5, 72/255, 0.5, 1.0);
-        this.material.setDiffuse(0, 155/255, 1, 1.0);
         this.material.apply();
 
         this.triangleBigBlue.display();
@@ -98,8 +112,6 @@ class MyTangram extends CGFobject {
         this.scene.translate(diff1, -Math.sqrt(2) + diff1, 0);
         this.scene.rotate(-Math.PI / 4, 0, 0, 1);
 
-        this.material.setAmbient(0.5, 72/255, 103/255, 1.0);
-        this.material.setDiffuse(1, 155/255, 207/255, 1.0);
         this.material.apply();
 
         this.triangle.display();
@@ -109,11 +121,9 @@ class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         var diff2 = Math.sqrt(2);
         this.scene.translate(diff1, -diff2 + diff1, 0)
-        this.scene.rotate(Math.PI * 3 /4, 0, 0, 1);
+        this.scene.rotate(Math.PI * 3 / 4, 0, 0, 1);
         this.scene.translate(0, -1, 0);
 
-        this.material.setAmbient(0.5, 13/255, 13/255, 1.0);
-        this.material.setDiffuse(1, 27/255, 27/255, 1.0);
         this.material.apply();
 
         this.triangleSmallRed.display();
