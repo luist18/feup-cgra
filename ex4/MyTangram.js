@@ -70,8 +70,6 @@ class MyTangram extends CGFobject {
         this.scene.rotate(-Math.PI / 2, 0, 0, 1);
         this.scene.scale(-1, 1, 1);
 
-        this.material.apply();
-
         this.parallelogram.display();
         this.scene.popMatrix();
 
@@ -80,8 +78,6 @@ class MyTangram extends CGFobject {
         this.scene.translate(-2, 3, 0);
         this.scene.rotate(Math.PI, 0, 0, 1);
 
-        this.material.apply();
-
         this.triangleSmallPurple.display();
         this.scene.popMatrix();
 
@@ -89,8 +85,6 @@ class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
-
-        this.material.apply();
 
         this.triangleBigOrange.display();
         this.scene.popMatrix();
@@ -101,8 +95,6 @@ class MyTangram extends CGFobject {
         this.scene.rotate(Math.PI / 4, 0, 0, 1);
         this.scene.translate(2, 0, 0);
 
-        this.material.apply();
-
         this.triangleBigBlue.display();
         this.scene.popMatrix();
 
@@ -111,8 +103,6 @@ class MyTangram extends CGFobject {
         var diff1 = Math.sqrt((3 - 2 * Math.sqrt(2)) / 4);
         this.scene.translate(diff1, -Math.sqrt(2) + diff1, 0);
         this.scene.rotate(-Math.PI / 4, 0, 0, 1);
-
-        this.material.apply();
 
         this.triangle.display();
         this.scene.popMatrix();
@@ -123,8 +113,6 @@ class MyTangram extends CGFobject {
         this.scene.translate(diff1, -diff2 + diff1, 0)
         this.scene.rotate(Math.PI * 3 / 4, 0, 0, 1);
         this.scene.translate(0, -1, 0);
-
-        this.material.apply();
 
         this.triangleSmallRed.display();
         this.scene.popMatrix();
