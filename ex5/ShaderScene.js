@@ -32,9 +32,9 @@ class ShaderScene extends CGFscene {
 		this.axis = new CGFaxis(this);
 		this.enableTextures(true);
 
-		this.objects=[
+		this.objects = [
 			new Teapot(this),
-			new MyPlane(this, 50)
+			new MyPlane(this, 256)
 		];
 
 		// Object interface variables
@@ -56,6 +56,9 @@ class ShaderScene extends CGFscene {
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
+		this.texture3 = new CGFtexture(this, "textures/waterTex.jpg");
+		this.texture4 = new CGFtexture(this, "textures/waterMap.jpg");
+		this.texture5 = new CGFtexture(this, "textures/communism.jpg");
 
 		// shaders initialization
 
@@ -70,7 +73,9 @@ class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/blueyellow.vert", "shaders/blueyellow.frag"),
-			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayscale.frag")
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayscale.frag"),
+			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag"),
+			new CGFshader(this.gl, "shaders/communism.vert", "shaders/communism.frag")
 		];
 
 		// additional texture will have to be bound to texture unit 1 later, when using the shader, with "this.texture2.bind(1);"
@@ -78,6 +83,10 @@ class ShaderScene extends CGFscene {
 		this.testShaders[5].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
+		this.testShaders[11].setUniformsValues({ water: 2 });
+		this.testShaders[11].setUniformsValues({ waterMap: 3 });
+		this.testShaders[11].setUniformsValues({ timeFactor: 0 });
+		this.testShaders[12].setUniformsValues({ uSampler: 4 });
 
 
 		// Shaders interface variables
@@ -93,7 +102,9 @@ class ShaderScene extends CGFscene {
 			'Sepia': 7,
 			'Convolution': 8,
 			'Blue and Yellow': 9,
-			'Grayscale': 10
+			'Grayscale': 10,
+			'Water': 11,
+			'Communism': 12
 		};
 
 		// shader code panels references
@@ -117,7 +128,7 @@ class ShaderScene extends CGFscene {
 	initCameras() {
 		this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(20, 20, 100), vec3.fromValues(0, 0, 0));
 	};
-	
+
 	// initialize lights
 	initLights() {
 
@@ -176,6 +187,19 @@ class ShaderScene extends CGFscene {
 		// only shader 6 is using time factor
 		if (this.selectedExampleShader == 6)
 			this.testShaders[6].setUniformsValues({ timeFactor: t / 100 % 1000 });
+		if (this.selectedExampleShader == 11) {
+			let time = (t / 6000.0 % 1.0);
+			this.testShaders[11].setUniformsValues({ timeFactor: time });
+			this.appearance.setTexture(this.texture3);
+			return;
+		}
+		if (this.selectedExampleShader == 12){
+			this.appearance.setTexture(this.texture5);
+			return;
+		}
+
+		this.appearance.setTexture(this.texture);
+		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 	}
 
 	// main display function
@@ -207,25 +231,28 @@ class ShaderScene extends CGFscene {
 
 		// bind additional texture to texture unit 1
 		this.texture2.bind(1);
+		this.texture3.bind(2);
+		this.texture4.bind(3);
+		this.texture5.bind(4);
 
-		if (this.selectedObject==0) {
+		if (this.selectedObject == 0) {
 			// teapot (scaled and rotated to conform to our axis)
 
 			this.pushMatrix();
-	
+
 			this.translate(0, -6, 0);
 			this.scale(0.5, 0.5, 0.5);
 			this.rotate(-Math.PI / 2, 1, 0, 0);
 			this.objects[0].display();
-	
+
 			this.popMatrix();
 		}
 		else {
 			this.pushMatrix();
-			
+
 			this.scale(25, 25, 25);
 			this.objects[1].display();
-			
+
 			this.popMatrix();
 		}
 
